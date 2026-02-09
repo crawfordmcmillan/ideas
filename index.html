@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporal Integrity for Regulatory Infrastructure</title>
+    <meta name="description" content="Regulatory infrastructure that preserves historical truth, enables controlled replay, and promotes change forward in time. For banks that refuse to choose between capital efficiency and regulatory defensibility.">
+    <style>
+        :root {
+            --navy: #0B1120;
+            --navy-light: #111827;
+            --navy-mid: #1a2332;
+            --slate: #94a3b8;
+            --slate-light: #cbd5e1;
+            --white: #f1f5f9;
+            --accent: #3b82f6;
+            --accent-dim: #1d4ed8;
+            --surface: #0f172a;
+            --border: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--navy);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.25rem 2rem;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+        }
+
+        nav a.nav-cta {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a.nav-cta:hover {
+            color: var(--white);
+        }
+
+        /* --- Sections --- */
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .container-wide {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            border-radius: 100px;
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .hero p.sub {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .hero-cta:hover {
+            background: var(--accent-dim);
+            transform: translateY(-1px);
+        }
+
+        /* --- Problem --- */
+        .problem {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+        }
+
+        .tension-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .tension-list li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        .tension-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.15rem;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--text-muted);
+        }
+
+        .callout {
+            margin: 2.5rem 0;
+            padding: 1.5rem 2rem;
+            border-left: 3px solid var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .callout p {
+            color: var(--slate-light);
+            margin-bottom: 0;
+            font-size: 1.05rem;
+        }
+
+        /* --- Principle --- */
+        .principle {
+            text-align: center;
+            padding: 5rem 2rem;
+        }
+
+        .principle-statement {
+            font-size: clamp(1.4rem, 3vw, 1.85rem);
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--white);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .principle p {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* --- Framework --- */
+        .framework {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .three-views {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .view-card {
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .view-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .view-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.25rem;
+        }
+
+        .view-card .view-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .view-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        .framework-note {
+            margin-top: 3rem;
+            text-align: center;
+            font-size: 1.15rem;
+            color: var(--slate-light);
+            font-weight: 500;
+        }
+
+        /* --- Delivers --- */
+        .delivers {
+            padding: 6rem 2rem;
+        }
+
+        .delivers-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .deliver-item {
+            padding: 1.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--navy-light);
+        }
+
+        .deliver-item h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .deliver-item p {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.55;
+        }
+
+        /* --- Credibility --- */
+        .credibility {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cred-points {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .cred-point {
+            text-align: center;
+        }
+
+        .cred-stat {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .cred-desc {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .cred-text {
+            margin-top: 3rem;
+            text-align: center;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cred-text p {
+            text-align: center;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+            text-align: center;
+        }
+
+        .waitlist-form {
+            display: flex;
+            gap: 0.75rem;
+            max-width: 480px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .waitlist-form input[type="email"] {
+            flex: 1;
+            padding: 0.85rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--white);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .waitlist-form input[type="email"]::placeholder {
+            color: var(--text-muted);
+        }
+
+        .waitlist-form input[type="email"]:focus {
+            border-color: var(--accent);
+        }
+
+        .waitlist-form button {
+            padding: 0.85rem 1.75rem;
+            background: var(--accent);
+            color: var(--white);
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .waitlist-form button:hover {
+            background: var(--accent-dim);
+        }
+
+        .form-note {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .form-success {
+            display: none;
+            padding: 1.5rem;
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .form-success p {
+            color: var(--slate-light);
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .three-views {
+                grid-template-columns: 1fr;
+            }
+
+            .delivers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cred-points {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .waitlist-form {
+                flex-direction: column;
+            }
+
+            .waitlist-form button {
+                width: 100%;
+            }
+        }
+
+        /* --- Divider --- */
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--border);
+            margin: 0 auto 2rem;
+        }
+
+        /* --- Scroll animation --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">Temporal Integrity</div>
+            <a href="#waitlist" class="nav-cta">Request Access</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-label">Regulatory Infrastructure</div>
+            <h1>Capital efficiency or regulatory defensibility. Pick both.</h1>
+            <p class="sub">Your bank holds capital it doesn't need because your governance infrastructure can't defend the improvement. We build the architecture that resolves that trade-off.</p>
+            <a href="#waitlist" class="hero-cta">Request Early Access</a>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="problem">
+        <div class="container fade-in">
+            <h2>Your regulatory infrastructure has a structural problem</h2>
+            <p>Every time a model improves, an assumption changes, or data gets corrected, you face the same question.</p>
+            <p><strong style="color: var(--white);">Can we adopt this improvement and still defend every number we've ever reported?</strong></p>
+            <p>Most institutions can't answer that cleanly. So they compensate.</p>
+            <ul class="tension-list">
+                <li>Capital buffers held against governance uncertainty, not actual risk</li>
+                <li>Model improvements delayed because the audit trail can't support the change</li>
+                <li>Manual reconciliation layers bridging systems that should be one architecture</li>
+                <li>Shadow pipelines that nobody fully trusts and everyone depends on</li>
+            </ul>
+            <p>Capital inefficiency becomes the safe choice. But that conservatism has a balance sheet cost.</p>
+
+            <div class="callout">
+                <p>The root cause is not technical complexity. It is governance complexity. Three requirements pull in different directions: immutability of historical submissions, replayability under alternative conditions, and clear designation of what is official. Most banks handle these through a combination of overwriting history and duplicating pipelines. Both fail at scale.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principle -->
+    <section class="principle">
+        <div class="container fade-in">
+            <div class="divider"></div>
+            <p class="principle-statement">The versioned execution is the atomic unit of truth. Not a table. Not a pipeline. Not the latest number.</p>
+            <p>Every model run, every regulatory calculation is stored as an immutable artifact with complete provenance. Once created, it is never overwritten. From this principle, an architecture follows naturally.</p>
+        </div>
+    </section>
+
+    <!-- Framework -->
+    <section class="framework">
+        <div class="container-wide fade-in">
+            <h2 style="text-align: center;">Three views of truth. Structurally separated.</h2>
+            <div class="three-views">
+                <div class="view-card">
+                    <span class="view-label">View 1</span>
+                    <h3>As Run</h3>
+                    <p>What actually executed at the time. Historical fact. The exact model version, assumption set, data snapshot, and outputs. Mechanically reproducible, always.</p>
+                </div>
+                <div class="view-card">
+                    <span class="view-label">View 2</span>
+                    <h3>As Reported</h3>
+                    <p>The run formally designated as official for that reporting period. Explicitly selected. Governance-approved. Immutable. Not inferred from timing.</p>
+                </div>
+                <div class="view-card">
+                    <span class="view-label">View 3</span>
+                    <h3>As Replayed</h3>
+                    <p>Counterfactual analysis under alternative assumptions or corrected data. Clearly labelled as non-historical. Never overwrites prior artifacts.</p>
+                </div>
+            </div>
+            <p class="framework-note">Changes define the future. They do not rewrite the past.</p>
+        </div>
+    </section>
+
+    <!-- What This Delivers -->
+    <section class="delivers">
+        <div class="container-wide fade-in">
+            <h2 style="text-align: center;">What this unlocks</h2>
+            <div class="delivers-grid">
+                <div class="deliver-item">
+                    <h3>Mechanical reproducibility</h3>
+                    <p>Retrieve any historical submission exactly as filed. No narrative reconstruction. No archaeology through old spreadsheets. The system produces it on demand.</p>
+                </div>
+                <div class="deliver-item">
+                    <h3>Evidence-based model adoption</h3>
+                    <p>Quantify the capital impact of any model change across multiple years of history before deciding to adopt. Decision-making shifts from defensive to analytical.</p>
+                </div>
+                <div class="deliver-item">
+                    <h3>Supervisory confidence</h3>
+                    <p>Demonstrate to the PRA exactly when an issue was identified, how it was assessed, what the quantified impact was, and when the change became effective.</p>
+                </div>
+                <div class="deliver-item">
+                    <h3>SM&CR protection</h3>
+                    <p>Senior Managers can show a complete, structurally embedded governance trail for every attested number. Not a reconstructed narrative. Preserved evidence.</p>
+                </div>
+                <div class="deliver-item">
+                    <h3>Capital efficiency</h3>
+                    <p>Reduce conservatism buffers with confidence. When your governance infrastructure can defend improved models, you can adopt them sooner and hold less excess capital.</p>
+                </div>
+                <div class="deliver-item">
+                    <h3>Sustainable architecture</h3>
+                    <p>One framework that scales across years of model evolution. No shadow systems. No manual reconciliation. Governance embedded structurally, not dependent on process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Credibility -->
+    <section class="credibility">
+        <div class="container-wide fade-in">
+            <h2 style="text-align: center;">Built by practitioners</h2>
+            <div class="cred-points">
+                <div class="cred-point">
+                    <div class="cred-stat">Live</div>
+                    <div class="cred-desc">Currently implementing this framework at a major investment firm. Production-tested, not theoretical.</div>
+                </div>
+                <div class="cred-point">
+                    <div class="cred-stat">20yr</div>
+                    <div class="cred-desc">Combined Fortune 100 financial services infrastructure experience. Regulatory-grade data platforms at scale.</div>
+                </div>
+                <div class="cred-point">
+                    <div class="cred-stat">3</div>
+                    <div class="cred-desc">UK banks in early conversations. We work with a small number of institutions at a time.</div>
+                </div>
+            </div>
+            <div class="cred-text">
+                <p>This is not a platform sale. It is not a slide deck. We design and build the architecture alongside your teams. We stay until the governance is embedded and the infrastructure defends itself.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="waitlist">
+        <div class="container fade-in">
+            <div class="divider"></div>
+            <h2>Request early access</h2>
+            <p>We're opening conversations with a small number of UK banks interested in resolving the trade-off between capital efficiency and regulatory defensibility.</p>
+            <form class="waitlist-form" id="waitlistForm">
+                <input type="email" name="email" placeholder="Work email" required>
+                <button type="submit">Request Access</button>
+            </form>
+            <p class="form-note">No commitment. No sales pitch. A conversation about whether this applies to your situation.</p>
+            <div class="form-success" id="formSuccess">
+                <p>Thank you. We'll be in touch within 48 hours to schedule a conversation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Crawford McMillan. Regulatory infrastructure advisory.</p>
+    </footer>
+
+    <script>
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Form handling
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+
+            // Store in localStorage as backup
+            const waitlist = JSON.parse(localStorage.getItem('waitlist') || '[]');
+            waitlist.push({ email, timestamp: new Date().toISOString() });
+            localStorage.setItem('waitlist', JSON.stringify(waitlist));
+
+            // Show success
+            this.style.display = 'none';
+            document.querySelector('.form-note').style.display = 'none';
+            document.getElementById('formSuccess').style.display = 'block';
+        });
+    </script>
+
+</body>
+</html>
