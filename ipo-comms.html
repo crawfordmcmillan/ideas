@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPO Communications - Own the Quiet Window</title>
+    <meta name="description" content="The 6-12 months before you file your S-1 is when valuations get made or left on the table. Most companies waste this window. We own it.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0B1120;
+            --navy-light: #111827;
+            --navy-mid: #1a2332;
+            --slate: #94a3b8;
+            --slate-light: #cbd5e1;
+            --white: #f1f5f9;
+            --accent: #10b981;
+            --accent-dim: #059669;
+            --accent-glow: rgba(16, 185, 129, 0.15);
+            --surface: #0f172a;
+            --border: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --font-serif: 'Instrument Serif', Georgia, serif;
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: var(--navy);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.25rem 2rem;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        nav .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 400;
+            font-style: italic;
+            letter-spacing: 0.01em;
+            color: var(--text-primary);
+        }
+
+        nav a.nav-cta {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a.nav-cta:hover {
+            color: var(--white);
+        }
+
+        section {
+            padding: 6rem 2rem;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .container-wide {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.03) 35%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            padding: 0.4rem 1rem;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 100px;
+            animation: fadeInDown 0.8s ease both;
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+            font-weight: 400;
+            line-height: 1.15;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+            animation: fadeInUp 0.8s ease 0.15s both;
+        }
+
+        .hero p.sub {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.65;
+            animation: fadeInUp 0.8s ease 0.3s both;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.3s;
+            animation: fadeInUp 0.8s ease 0.45s both;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+
+        .hero-cta:hover {
+            background: var(--accent-dim);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .problem {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: var(--font-serif);
+            font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+        }
+
+        .callout {
+            margin: 2.5rem 0;
+            padding: 1.5rem 2rem;
+            border-left: 3px solid var(--accent);
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .callout p {
+            color: var(--slate-light);
+            margin-bottom: 0;
+            font-size: 1.05rem;
+            font-style: italic;
+        }
+
+        .principle {
+            text-align: center;
+            padding: 5rem 2rem;
+            position: relative;
+        }
+
+        .principle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .principle-statement {
+            font-family: var(--font-serif);
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 400;
+            font-style: italic;
+            line-height: 1.4;
+            color: var(--white);
+            max-width: 700px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .principle p {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .framework {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .four-pillars {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .pillar-card {
+            padding: 2rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .pillar-card:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(16, 185, 129, 0.1);
+        }
+
+        .pillar-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: var(--white);
+            margin-bottom: 0.75rem;
+        }
+
+        .pillar-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+
+        .framework-note {
+            margin-top: 3rem;
+            text-align: center;
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--slate-light);
+            font-weight: 400;
+        }
+
+        .qualifier {
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .qualifier-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2.5rem;
+        }
+
+        .qualifier-col h3 {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+
+        .qualifier-col.fit h3 {
+            color: var(--accent);
+        }
+
+        .qualifier-col.not-fit h3 {
+            color: var(--text-muted);
+        }
+
+        .qualifier-col ul {
+            list-style: none;
+        }
+
+        .qualifier-col ul li {
+            padding: 0.6rem 0;
+            padding-left: 1.75rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+            line-height: 1.5;
+        }
+
+        .qualifier-col.fit ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+        }
+
+        .qualifier-col.not-fit ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 8px;
+            height: 2px;
+            background: var(--text-muted);
+        }
+
+        .outcome {
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .outcome::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse, rgba(16, 185, 129, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .outcome p {
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            text-align: center;
+        }
+
+        .cta-section {
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            background: var(--navy-light);
+            border-top: 1px solid var(--border);
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 500px;
+            background: radial-gradient(ellipse, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            max-width: 550px;
+            margin: 0 auto 2.5rem;
+            text-align: center;
+        }
+
+        .cta-section p.note {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            background: var(--accent);
+            color: var(--white);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.3s;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-dim);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        footer {
+            padding: 2.5rem 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .divider {
+            width: 60px;
+            height: 2px;
+            background: var(--border);
+            margin: 0 auto 2rem;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-children .stagger-item {
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .stagger-children.visible .stagger-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stagger-children.visible .stagger-item:nth-child(1) { transition-delay: 0.1s; }
+        .stagger-children.visible .stagger-item:nth-child(2) { transition-delay: 0.2s; }
+        .stagger-children.visible .stagger-item:nth-child(3) { transition-delay: 0.3s; }
+        .stagger-children.visible .stagger-item:nth-child(4) { transition-delay: 0.4s; }
+
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero {
+                padding: 8rem 1.5rem 4rem;
+            }
+
+            .four-pillars {
+                grid-template-columns: 1fr;
+            }
+
+            .qualifier-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">IPO Communications</div>
+            <a href="#contact" class="nav-cta">Start a Conversation</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-label">Pre-IPO Narrative Strategy</div>
+            <h1>By the time you file your S-1, your narrative is already written. The question is: by whom?</h1>
+            <p class="sub">The 6-12 months before you go public is when valuations get made or left on the table. Most companies waste this window. We own it.</p>
+            <a href="#contact" class="hero-cta">Talk to Us About Your Timeline</a>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container fade-in">
+            <h2>Your IPO has a narrative problem you don't know about yet</h2>
+            <p>Right now, somewhere in the market, investors are forming opinions about your company. Analysts are building mental models. Journalists are deciding if you're a story worth covering.</p>
+            <p>This is happening whether you're ready or not.</p>
+            <p>The window between "we're thinking about going public" and "we just filed" is when your story gets locked. Not the roadshow. Not the pricing call. The months before anyone knows you're coming.</p>
+            <p>Most companies spend this time on lawyers and bankers. They assume the story will come together later.</p>
+            <p>It doesn't.</p>
+            <p>By the time they're on the roadshow, the narrative is already baked. The analyst consensus is already forming. The first-day pop (or drop) is already in motion.</p>
+            <div class="callout">
+                <p>The quiet period isn't when your story starts. It's when it gets locked.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="principle">
+        <div class="container fade-in">
+            <div class="divider"></div>
+            <p class="principle-statement">Companies that nail the pre-filing window don't just get better coverage. They get better valuations.</p>
+            <p>The narrative precedes the numbers. The story shapes the multiple. Our most recent client achieved a valuation that surprised even their bankers. Not because the numbers changed. Because the story was already in place when the numbers showed up.</p>
+        </div>
+    </section>
+
+    <section class="framework">
+        <div class="container-wide fade-in">
+            <h2 style="text-align: center;">We run the 12 months before your S-1 like a campaign</h2>
+            <p style="text-align: center; max-width: 600px; margin: 0 auto;">Not a PR campaign. A narrative campaign across every surface that touches your valuation.</p>
+            <div class="four-pillars stagger-children">
+                <div class="pillar-card stagger-item">
+                    <h3>Media Relations</h3>
+                    <p>The journalists who move your stock price are in a 10-block radius. We know them. When they write about your sector, your executives are the ones they call.</p>
+                </div>
+                <div class="pillar-card stagger-item">
+                    <h3>Digital Footprint</h3>
+                    <p>Your online presence is your pre-roadshow roadshow. We make sure every search, every profile, every mention tells the same story.</p>
+                </div>
+                <div class="pillar-card stagger-item">
+                    <h3>Influencer Engagement</h3>
+                    <p>Industry voices shape analyst opinion. We put your leadership in the conversations that matter before they matter.</p>
+                </div>
+                <div class="pillar-card stagger-item">
+                    <h3>Executive Positioning</h3>
+                    <p>Investors bet on jockeys, not horses. We position your leadership team as the reason to believe.</p>
+                </div>
+            </div>
+            <p class="framework-note">Four disciplines. One integrated story. One team.</p>
+        </div>
+    </section>
+
+    <section class="problem">
+        <div class="container fade-in">
+            <h2>Why large agencies fail at this</h2>
+            <p>Media team files the press releases. Digital team runs the LinkedIn. IR team preps the roadshow deck. Executive coach works with the CEO.</p>
+            <p>By the time your story reaches the market, it's four different stories. The S-1 says one thing. The CEO profile says another. The digital footprint contradicts both.</p>
+            <p>Analysts notice. Investors notice. Your valuation reflects the confusion.</p>
+            <p>We run all four as one campaign because that's how the market receives you: as one company with one story.</p>
+            <div class="callout">
+                <p>The narrative has to be consistent before it can be compelling.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="qualifier">
+        <div class="container-wide fade-in">
+            <h2 style="text-align: center;">Is this right for you?</h2>
+            <div class="qualifier-grid">
+                <div class="qualifier-col fit">
+                    <h3>You're a good fit if</h3>
+                    <ul>
+                        <li>You're targeting a New York listing</li>
+                        <li>You're 12-18 months from filing</li>
+                        <li>Your leadership team is a genuine asset, not a liability</li>
+                        <li>You believe narrative shapes valuation, not just numbers</li>
+                        <li>You want one team owning the full story, not four vendors coordinating poorly</li>
+                    </ul>
+                </div>
+                <div class="qualifier-col not-fit">
+                    <h3>Not designed for</h3>
+                    <ul>
+                        <li>Companies 3 months from filing (too late for this approach)</li>
+                        <li>Teams wanting traditional PR metrics (impressions, clips) instead of valuation outcomes</li>
+                        <li>Organizations optimizing for coverage volume, not narrative quality</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="outcome">
+        <div class="container fade-in">
+            <div class="divider"></div>
+            <h2>The outcome</h2>
+            <p>Your S-1 lands in a market that already knows your story.</p>
+            <p>Analysts have seen your executives quoted as experts. Journalists have already written the profiles. Your digital presence reflects the company you're about to become, not the one you used to be.</p>
+            <p>The roadshow isn't where you introduce yourself. It's where you confirm what people already believe.</p>
+            <p style="color: var(--white); font-weight: 500;">That's when valuations exceed expectations.</p>
+        </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+        <div class="container fade-in">
+            <div class="divider"></div>
+            <h2>Start the conversation</h2>
+            <p>We work with a limited number of pre-IPO companies at any time. If you're 12-18 months out and serious about owning your narrative window, let's talk.</p>
+            <a href="mailto:hello@example.com" class="cta-btn">Get in Touch</a>
+            <p class="note">No pitch deck. No pressure. A conversation about whether this applies to your situation.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>IPO Communications. New York.</p>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in, .stagger-children').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>
